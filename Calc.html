@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="css/Calc.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="nav">
+
+    <h1>Salary Calculator</h1>
+
+  </div>
+
+  <div class="main" >
+
+    <div class="items">
+      <div class="pay_group">
+        <label>Salary</label>
+        <input class="pays" type="number" name="pays ">
+        <label>Per</label>
+        <select class="time_selector" onchange="UIController.uichanges()">
+          <option class="hourly" type="text" name="hour" >hour</option>
+          <option class="daily" type="text" name="day">day</option>
+          <option class="monthly" type="text" name="month">month</option>
+        </select>
+      </div>
+      
+      <div class="hours_group">
+        <label>Hours Per Day</label>
+        <input class="hours" type="number" name="hours">
+      </div>
+      
+      <div class="days_group">
+        <label>Days Per Week</label>
+        <select class="days" type="number" name="days">
+          <option class="one" value="1">1</option>
+          <option class="two" value="2">2</option>
+          <option class="three" value="3">3</option>
+          <option class="four" value="4">4</option>
+          <option class="five" value="5">5</option>
+          <option class="six" value="6">6</option>
+          <option class="seven" value="7">7</option>
+        </select>
+      </div>
+      
+      
+      
+    </div>
+
+    <div class="enter">
+      <button class="math">Calculate</button>
+    </div>
+
+    <!--<div class="salary_text">
+      You will make 2,074 per year.
+    </div>-->
+    
+
+  </div>
+
+  <div class="info">
+    <p>
+      This salary calculator assumes a 52 week workyear, or 260 workday year without any sick days, or vacation days.
+    </p>
+    <p>
+      
+    </p>
+  </div>
+
+  
+
+  <script src="js/Calc.js"></script>
+</body>
+
+</html>
