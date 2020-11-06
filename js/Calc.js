@@ -5,25 +5,51 @@ var CalculationController = function(){
     
     return {
         maff: function(){
+            var info, actualSalary, dailySalary, weeklySalary, biweeklySalary, 
+            semimonthlySalary, monthlySalary, 
             
-            var info= UIController.getinput();
-            var actualSalary
+            
+             info= UIController.getinput();
+             actualSalary
 
             if (info.timeframe == 'hour'){
-                var actualSalary= (Number(info.pay) * Number(info.hour) * Number(info.day) * 52);
+                actualSalary= (Number(info.pay) * Number(info.hour) * Number(info.day) * 52);
+                dailySalary= Math.round(actualSalary/260);
+                weeklySalary= Math.round(actualSalary/52);
+                biweeklySalary = Math.round(actualSalary/26);
+                monthlySalary = Math.round(actualSalary/12);
+                semimonthlySalary = Math.round(actualSalary/24);
+                console.log(dailySalary, weeklySalary, biweeklySalary, monthlySalary);
             }
             else if(info.timeframe == 'day'){
-                var actualSalary= (Number(info.pay) * Number(info.day) * 52);
+                actualSalary= (Number(info.pay) * Number(info.day) * 52);
+                dailySalary= Math.round(actualSalary/260);
+                weeklySalary= Math.round(actualSalary/52);
+                biweeklySalary = Math.round(actualSalary/26);
+                monthlySalary = Math.round(actualSalary/12);
+                semimonthlySalary = Math.round(actualSalary/24);
+                console.log(dailySalary, weeklySalary, biweeklySalary, monthlySalary);
             }
             else if(info.timeframe == 'month'){
-                var actualSalary= (Number(info.pay) * Number(info.month));
+                actualSalary= (Number(info.pay) * Number(info.month));
+                dailySalary= Math.round(actualSalary/260);
+                weeklySalary= Math.round(actualSalary/52);
+                biweeklySalary = Math.round(actualSalary/26);
+                monthlySalary = Math.round(actualSalary/12);
+                semimonthlySalary = Math.round(actualSalary/24);
+                console.log(dailySalary, weeklySalary, biweeklySalary, monthlySalary);
             }
             
             
             
             return {
                 
-                sal: actualSalary
+                sal: actualSalary,
+                daily: dailySalary,
+                weekly: weeklySalary,
+                biweekly: biweeklySalary,
+                monthly: monthlySalary,
+                semimonthly: semimonthlySalary
             }
 
         },
@@ -45,7 +71,8 @@ var UIController = function(){
         mathbutton: '.math',
         timedropdown: '.time_selector',
         textview: '.text_view',
-        yup: '.enter'
+        enter: '.enter',
+        paragraph: '.paragraph'
     }
 
     return {
@@ -188,8 +215,66 @@ var UIController = function(){
 
             newHtml = Html.replace('%number%', hm.sal);
 
-            document.querySelector(DOMStrings.yup).insertAdjacentHTML('afterend', newHtml);
+            document.querySelector(DOMStrings.enter).insertAdjacentHTML('afterend', newHtml);
             
+        },
+
+        showChart: function(){
+            var Html, newHtml;
+            //this is done in app controller too. try not to repeat yourself
+            var hm = CalculationController.maff();
+            
+            //remove previously added html element
+            if(document.querySelector('.table')){
+                var yeah = document.querySelector('.table')
+                yeah.remove();
+            }
+            
+            //insert new html element
+            Html = `<div class="table">
+                        <table>
+                        <tr>
+                            <th>Frequency</th>
+                            <th>Salary</th>
+                        </tr>
+                        <tr>
+                            <td>Daily</td>
+                            <td class="chart daily_cash">%daily_cash%</td>
+                        </tr>
+                        <tr>
+                            <td>weekly</td>
+                            <td class="chart weekly_cash">%weekly_cash%</td>
+                        </tr>
+                        <tr>
+                            <td>bi-weekly</td>
+                            <td class="chart biweekly_cash">%biweekly_cash%</td>
+                        </tr>
+                        <tr>
+                            <td>semi-monthly</td>
+                            <td class="chart semimonthly_cash">%semimonthly_cash%</td>
+                        </tr>
+                        <tr>
+                            <td>monthly</td>
+                            <td class="chart monthly_cash">%monthly_cash%</td>
+                        </tr>
+                        <tr>
+                            <td>Annually</td>
+                            <td class="chart annually_cash">%annually_cash%</td>
+                        </tr>
+                        </table>
+                        
+                    </div>`
+
+            newHtml = Html.replace('%daily_cash%', hm.daily);
+            newHtml = newHtml.replace('%weekly_cash%', hm.weekly);
+            newHtml = newHtml.replace('%biweekly_cash%', hm.biweekly);
+            newHtml = newHtml.replace('%monthly_cash%', hm.monthly);
+            newHtml = newHtml.replace('%semimonthly_cash%', hm.semimonthly);
+            newHtml = newHtml.replace('%annually_cash%', hm.sal);
+
+
+            document.querySelector(DOMStrings.paragraph).insertAdjacentHTML('afterend', newHtml);
+
         },
 
         getDOMStrings: function(){
@@ -222,6 +307,7 @@ var AppController = function(CalcControl, UIControl){
         
         //Display Salary on page
         UIControl.showSalary();
+        UIControl.showChart();
 
 
 
